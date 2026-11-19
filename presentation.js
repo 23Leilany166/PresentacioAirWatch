@@ -8,12 +8,12 @@
  */
 
 // URL oficial editable para acceso y código QR
-const AIRWATCH_URL = "https://airwatch-mixquiahuala.mx";
+const AIRWATCH_URL = "https://pag-integrador.pages.dev/";
 
 // Objeto de configuración y estado global
 const PresenterState = {
   currentSlideIndex: 0,
-  totalSlides: 8,
+  totalSlides: 10,
   isNotesOpen: false,
   isHelpOpen: false,
   isPlatformModalOpen: false,
@@ -37,6 +37,8 @@ const PresenterState = {
   }
 };
 
+let webCarouselController = null;
+
 // ============================================================================
 // INICIALIZACIÓN AL CARGAR EL DOM
 // ============================================================================
@@ -48,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initModals();
   initSlideSpecificWidgets();
   initQRCode();
+  initConclusionImage();
+  initPrototypeVideo();
+  webCarouselController = initWebShowcaseCarousel();
   updateSlideUI();
   console.log("⚡ Air Watch Telemetry Presentation Engine Inicializado.");
 });
@@ -163,7 +168,7 @@ function handleKeyNavigation(e) {
       closeAllModals();
       break;
 
-    // Teclas 1 a 8 para salto directo
+    // Teclas 1 a 9 para salto directo; 0 selecciona la diapositiva 10.
     case "1":
     case "2":
     case "3":
@@ -172,7 +177,9 @@ function handleKeyNavigation(e) {
     case "6":
     case "7":
     case "8":
-      const targetIndex = parseInt(e.key, 10) - 1;
+    case "9":
+    case "0":
+      const targetIndex = e.key === "0" ? PresenterState.totalSlides - 1 : parseInt(e.key, 10) - 1;
       if (targetIndex >= 0 && targetIndex < PresenterState.totalSlides) {
         goToSlide(targetIndex);
       }
@@ -205,6 +212,9 @@ function goToSlide(targetIndex) {
   slides[targetIndex].classList.add("active");
   PresenterState.currentSlideIndex = targetIndex;
 
+  if (webCarouselController) {
+    webCarouselController.onSlideChange(targetIndex);
+  }
   updateSlideUI();
   syncSpeakerNotes();
   triggerSlideSpecificAnimations(targetIndex);
@@ -227,6 +237,10 @@ function updateSlideUI() {
   const currentNumEl = document.getElementById("currentSlideNum");
   if (currentNumEl) {
     currentNumEl.textContent = String(currentIndex + 1).padStart(2, "0");
+  }
+  const totalNumEl = document.getElementById("totalSlidesNum");
+  if (totalNumEl) {
+    totalNumEl.textContent = String(PresenterState.totalSlides).padStart(2, "0");
   }
 
   // 3. Título y tiempo de la diapositiva activa
@@ -251,6 +265,25 @@ function updateSlideUI() {
   pills.forEach((pill, idx) => {
     pill.classList.toggle("active", idx === currentIndex);
   });
+}
+
+function initPrototypeVideo() {
+  const video = document.querySelector("#slide-5 .prototype-video-player");
+  const fallback = document.getElementById("prototypeVideoFallback");
+  if (!video || !fallback) return;
+
+  const showFallback = () => {
+    video.hidden = true;
+    fallback.hidden = false;
+  };
+  const showVideo = () => {
+    video.hidden = false;
+    fallback.hidden = true;
+  };
+
+  video.addEventListener("error", showFallback);
+  video.addEventListener("canplay", showVideo);
+  if (video.error) showFallback();
 }
 
 // ============================================================================
@@ -525,13 +558,108 @@ function initSlideSpecificWidgets() {
   if (copyBtn) {
     copyBtn.addEventListener("click", () => {
       navigator.clipboard.writeText(AIRWATCH_URL).then(() => {
-        copyBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+        copyBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#587449" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
         setTimeout(() => {
           copyBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
         }, 2000);
-      }).catch(err => console.log("Clipboard info:", err));
+      }).catch(err => console.error("No se pudo copiar el enlace de Air Watch:", err));
     });
   }
+}
+
+function initWebShowcaseCarousel() {
+  const carousel = document.getElementById("webDeliverableCarousel");
+  if (!carousel) return null;
+
+  const slides = Array.from(carousel.querySelectorAll(".web-carousel-slide"));
+  const dots = Array.from(carousel.querySelectorAll("[data-web-slide]"));
+  const previousButton = carousel.querySelector(".web-carousel-previous");
+  const nextButton = carousel.querySelector(".web-carousel-next");
+  let currentIndex = 0;
+  let intervalId = null;
+  let isInteracting = false;
+
+  function showSlide(index) {
+    currentIndex = (index + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => {
+      const isCurrent = slideIndex === currentIndex;
+      slide.classList.toggle("is-current", isCurrent);
+      slide.setAttribute("aria-hidden", String(!isCurrent));
+    });
+    dots.forEach((dot, dotIndex) => {
+      const isCurrent = dotIndex === currentIndex;
+      dot.classList.toggle("is-current", isCurrent);
+      if (isCurrent) {
+        dot.setAttribute("aria-current", "true");
+      } else {
+        dot.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  function stop() {
+    if (intervalId !== null) {
+      window.clearInterval(intervalId);
+      intervalId = null;
+    }
+  }
+
+  function start() {
+    stop();
+    if (PresenterState.currentSlideIndex !== 7 || document.hidden || isInteracting) return;
+    intervalId = window.setInterval(() => showSlide(currentIndex + 1), 2000);
+  }
+
+  function setInteracting(value) {
+    isInteracting = value;
+    if (isInteracting) stop();
+    else start();
+  }
+
+  function manualNavigation(index) {
+    showSlide(index);
+    start();
+  }
+
+  if (previousButton) {
+    previousButton.addEventListener("click", () => manualNavigation(currentIndex - 1));
+  }
+  if (nextButton) {
+    nextButton.addEventListener("click", () => manualNavigation(currentIndex + 1));
+  }
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      const targetIndex = Number.parseInt(dot.getAttribute("data-web-slide"), 10);
+      if (Number.isInteger(targetIndex)) manualNavigation(targetIndex);
+    });
+  });
+
+  carousel.addEventListener("pointerdown", () => setInteracting(true));
+  document.addEventListener("pointerup", () => setInteracting(false));
+  document.addEventListener("pointercancel", () => setInteracting(false));
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stop();
+    else start();
+  });
+
+  carousel.querySelectorAll("img[data-fallback]").forEach((image) => {
+    const showPlaceholder = () => {
+      image.style.display = "none";
+      const placeholder = image.parentElement.querySelector(".web-shot-placeholder");
+      if (placeholder) placeholder.hidden = false;
+    };
+    image.addEventListener("error", showPlaceholder);
+    if (image.complete && image.naturalWidth === 0) showPlaceholder();
+  });
+
+  showSlide(0);
+  return {
+    onSlideChange(index) {
+      if (index === 7) start();
+      else stop();
+    }
+  };
 }
 
 /**
@@ -557,7 +685,7 @@ function simulateIndustrialDischarge(isSpike) {
     // ESTADO DE ALERTA ROJA / TOXICIDAD ELEVADA
     if (gEco2) {
       gEco2.style.width = "88%";
-      gEco2.style.backgroundColor = "#ef4444";
+      gEco2.style.backgroundColor = "#bd3f39";
     }
     if (vEco2) vEco2.textContent = "1,420 ppm";
     if (sEco2) {
@@ -567,7 +695,7 @@ function simulateIndustrialDischarge(isSpike) {
 
     if (gTvoc) {
       gTvoc.style.width = "82%";
-      gTvoc.style.backgroundColor = "#ef4444";
+      gTvoc.style.backgroundColor = "#bd3f39";
     }
     if (vTvoc) vTvoc.textContent = "685 ppb";
     if (sTvoc) {
@@ -577,7 +705,7 @@ function simulateIndustrialDischarge(isSpike) {
 
     if (gMics) {
       gMics.style.width = "75%";
-      gMics.style.backgroundColor = "#f59e0b";
+      gMics.style.backgroundColor = "#a9650b";
     }
     if (vMics) vMics.textContent = "Rs/R₀: 0.28 (CH₄ detectado)";
     if (sMics) {
@@ -591,13 +719,13 @@ function simulateIndustrialDischarge(isSpike) {
     }
     if (subtext) {
       subtext.textContent = "Notificación push enviada a Protección Civil y usuarios de El Bondho.";
-      subtext.style.color = "#fca5a5";
+      subtext.style.color = "#a8322c";
     }
   } else {
     // RESTABLECER ESTADO SEGURO
     if (gEco2) {
       gEco2.style.width = "28%";
-      gEco2.style.backgroundColor = "#10b981";
+      gEco2.style.backgroundColor = "#48734b";
     }
     if (vEco2) vEco2.textContent = "412 ppm";
     if (sEco2) {
@@ -607,7 +735,7 @@ function simulateIndustrialDischarge(isSpike) {
 
     if (gTvoc) {
       gTvoc.style.width = "18%";
-      gTvoc.style.backgroundColor = "#10b981";
+      gTvoc.style.backgroundColor = "#48734b";
     }
     if (vTvoc) vTvoc.textContent = "65 ppb";
     if (sTvoc) {
@@ -617,7 +745,7 @@ function simulateIndustrialDischarge(isSpike) {
 
     if (gMics) {
       gMics.style.width = "15%";
-      gMics.style.backgroundColor = "#10b981";
+      gMics.style.backgroundColor = "#48734b";
     }
     if (vMics) vMics.textContent = "Rs/R₀: 0.94";
     if (sMics) {
@@ -667,7 +795,7 @@ function animateNumber(element, start, end, duration) {
 }
 
 // ============================================================================
-// 7. CÓDIGO QR DINÁMICO & NÍTIDO (LÁMINA 8) CON RESPALDO
+// 7. CÓDIGO QR DINÁMICO & NÍTIDO (LÁMINA 10)
 // ============================================================================
 function initQRCode() {
   const qrContainer = document.getElementById("qrcodeCanvas");
@@ -679,6 +807,11 @@ function initQRCode() {
 
   if (!qrContainer) return;
   qrContainer.innerHTML = "";
+
+  function showQRCodeUnavailable() {
+    qrContainer.setAttribute("role", "status");
+    qrContainer.textContent = "No se pudo cargar el generador QR. Revisa tu conexión.";
+  }
 
   // Intentar renderizar con QRCode.js si la librería del CDN está disponible
   if (typeof QRCode !== "undefined") {
@@ -693,51 +826,26 @@ function initQRCode() {
       });
       return;
     } catch (e) {
-      console.warn("Fallo al generar QR con qrcodejs, usando renderizador SVG vectorial alternativo:", e);
+      console.error("No se pudo generar el código QR de Air Watch:", e);
+      showQRCodeUnavailable();
+      return;
     }
   }
 
-  // Respaldo de alta fidelidad: SVG Vectorial limpio y nítido para entornos offline
-  renderVectorQRFallback(qrContainer, AIRWATCH_URL);
+  console.error("No se pudo generar el código QR: QRCode.js no está disponible.");
+  showQRCodeUnavailable();
 }
 
-function renderVectorQRFallback(container, url) {
-  // Genera un QR SVG decorativo pero ultra nítido con patrón matricial geométrico
-  container.innerHTML = `
-    <svg viewBox="0 0 120 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-      <rect width="120" height="120" fill="#ffffff" rx="6"/>
-      <!-- Marcadores de posición esquinas -->
-      <rect x="10" y="10" width="30" height="30" fill="#040d14" rx="4"/>
-      <rect x="15" y="15" width="20" height="20" fill="#ffffff" rx="2"/>
-      <rect x="20" y="20" width="10" height="10" fill="#10b981"/>
+function initConclusionImage() {
+  const image = document.querySelector("#slide-10 .conclusion-visual img");
+  if (!image) return;
 
-      <rect x="80" y="10" width="30" height="30" fill="#040d14" rx="4"/>
-      <rect x="85" y="15" width="20" height="20" fill="#ffffff" rx="2"/>
-      <rect x="90" y="20" width="10" height="10" fill="#10b981"/>
+  const showPlaceholder = () => {
+    image.hidden = true;
+    const placeholder = image.parentElement.querySelector(".conclusion-image-placeholder");
+    if (placeholder) placeholder.hidden = false;
+  };
 
-      <rect x="10" y="80" width="30" height="30" fill="#040d14" rx="4"/>
-      <rect x="15" y="85" width="20" height="20" fill="#ffffff" rx="2"/>
-      <rect x="20" y="90" width="10" height="10" fill="#10b981"/>
-
-      <!-- Módulos de datos simulados de alta densidad -->
-      <g fill="#040d14">
-        <rect x="45" y="12" width="6" height="6"/><rect x="55" y="12" width="6" height="6"/><rect x="67" y="12" width="6" height="6"/>
-        <rect x="45" y="24" width="6" height="6"/><rect x="61" y="24" width="6" height="6"/><rect x="55" y="32" width="6" height="6"/>
-        <rect x="12" y="46" width="6" height="6"/><rect x="24" y="46" width="6" height="6"/><rect x="36" y="46" width="6" height="6"/>
-        <rect x="48" y="46" width="6" height="6"/><rect x="60" y="46" width="6" height="6"/><rect x="72" y="46" width="6" height="6"/>
-        <rect x="84" y="46" width="6" height="6"/><rect x="96" y="46" width="6" height="6"/><rect x="102" y="46" width="6" height="6"/>
-        <rect x="18" y="58" width="6" height="6"/><rect x="30" y="58" width="6" height="6"/><rect x="42" y="58" width="6" height="6"/>
-        <rect x="66" y="58" width="6" height="6"/><rect x="78" y="58" width="6" height="6"/><rect x="90" y="58" width="6" height="6"/>
-        <rect x="12" y="70" width="6" height="6"/><rect x="24" y="70" width="6" height="6"/><rect x="36" y="70" width="6" height="6"/>
-        <rect x="48" y="70" width="6" height="6"/><rect x="60" y="70" width="6" height="6"/><rect x="72" y="70" width="6" height="6"/>
-        <rect x="84" y="70" width="6" height="6"/><rect x="96" y="70" width="6" height="6"/>
-        <rect x="45" y="82" width="6" height="6"/><rect x="57" y="82" width="6" height="6"/><rect x="69" y="82" width="6" height="6"/>
-        <rect x="81" y="82" width="6" height="6"/><rect x="93" y="82" width="6" height="6"/><rect x="105" y="82" width="6" height="6"/>
-        <rect x="45" y="94" width="6" height="6"/><rect x="57" y="94" width="6" height="6"/><rect x="69" y="94" width="6" height="6"/>
-        <rect x="81" y="94" width="6" height="6"/><rect x="99" y="94" width="6" height="6"/>
-        <rect x="45" y="106" width="6" height="6"/><rect x="63" y="106" width="6" height="6"/><rect x="75" y="106" width="6" height="6"/>
-        <rect x="87" y="106" width="6" height="6"/><rect x="102" y="106" width="6" height="6"/>
-      </g>
-    </svg>
-  `;
+  image.addEventListener("error", showPlaceholder);
+  if (image.complete && image.naturalWidth === 0) showPlaceholder();
 }
