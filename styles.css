@@ -407,6 +407,9 @@ html, body {
 }
 
 /* SLIDE BASE: Perfect Full-Width Centering, No Sticking to the Right */
+/* =========================================================================
+   3D CAMERA DEPTH & ZOOM TRANSITIONS
+   ========================================================================= */
 .slide,
 .slide-section {
   position: absolute;
@@ -421,25 +424,40 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Diapositiva siguiente en espera */
   opacity: 0;
   visibility: hidden;
+  transform: scale(0.9) translateY(2rem);
+  filter: blur(8px);
   pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 650ms ease, transform 750ms cubic-bezier(0.16, 1, 0.3, 1), filter 650ms ease;
+  will-change: opacity, transform, filter;
 }
 
+/* Diapositiva activa: 3D frontal nítida */
+.slide.is-active,
 .slide.active,
+.slide-section.is-active,
 .slide-section.active {
   opacity: 1;
   visibility: visible;
+  transform: scale(1) translateY(0);
+  filter: blur(0);
   pointer-events: auto;
   z-index: 5;
 }
 
+/* Diapositiva que sale hacia atrás (.is-before) */
+.slide.is-before,
 .slide.prev-slide,
+.slide-section.is-before,
 .slide-section.prev-slide {
   opacity: 0;
   visibility: hidden;
+  transform: scale(1.14) translateY(-1.5rem);
+  filter: blur(10px);
   pointer-events: none;
+  z-index: 1;
 }
 
 /* SLIDE INNER CONTAINER: 100% Width Centered, Compact Flex Distribution */
@@ -464,28 +482,43 @@ html, body {
   display: none;
 }
 
-/* Progressive appearance for slide content */
+/* Progressive appearance for slide content: Staggered entrance from bottom */
+.slide.is-active .slide-inner > *,
 .slide.active .slide-inner > *,
+.slide-section.is-active .slide-inner > *,
 .slide-section.active .slide-inner > * {
-  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: slideElementEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+.slide.is-active .slide-inner > *:nth-child(1),
 .slide.active .slide-inner > *:nth-child(1),
-.slide-section.active .slide-inner > *:nth-child(1) { animation-delay: 0.04s; }
+.slide-section.is-active .slide-inner > *:nth-child(1),
+.slide-section.active .slide-inner > *:nth-child(1) { animation-delay: 0.12s; }
 
+.slide.is-active .slide-inner > *:nth-child(2),
 .slide.active .slide-inner > *:nth-child(2),
-.slide-section.active .slide-inner > *:nth-child(2) { animation-delay: 0.08s; }
+.slide-section.is-active .slide-inner > *:nth-child(2),
+.slide-section.active .slide-inner > *:nth-child(2) { animation-delay: 0.24s; }
 
+.slide.is-active .slide-inner > *:nth-child(3),
 .slide.active .slide-inner > *:nth-child(3),
-.slide-section.active .slide-inner > *:nth-child(3) { animation-delay: 0.12s; }
+.slide-section.is-active .slide-inner > *:nth-child(3),
+.slide-section.active .slide-inner > *:nth-child(3) { animation-delay: 0.36s; }
 
+.slide.is-active .slide-inner > *:nth-child(4),
 .slide.active .slide-inner > *:nth-child(4),
-.slide-section.active .slide-inner > *:nth-child(4) { animation-delay: 0.16s; }
+.slide-section.is-active .slide-inner > *:nth-child(4),
+.slide-section.active .slide-inner > *:nth-child(4) { animation-delay: 0.48s; }
 
-@keyframes fadeInUp {
+.slide.is-active .slide-inner > *:nth-child(5),
+.slide.active .slide-inner > *:nth-child(5),
+.slide-section.is-active .slide-inner > *:nth-child(5),
+.slide-section.active .slide-inner > *:nth-child(5) { animation-delay: 0.60s; }
+
+@keyframes slideElementEntrance {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -978,7 +1011,448 @@ html, body {
 }
 
 /* ==========================================================================
-   SLIDE 2: PLANTEAMIENTO DEL PROBLEMA & DATOS MATEMÁTICOS (CORREGIDA)
+   SLIDE 2: IDENTIDAD DE MARCA · AIR WATCH (VIDEO & CARRUSEL INTERACTIVO)
+   - Layout de 2 columnas balanceado al 100% de ancho
+   - Tipografía cinética con onda sinusoidal continua de monitoreo ambiental
+   - Visor técnico con carrusel fluido: video 3D + fotografías de campo
+   ========================================================================== */
+.brand-slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.brand-showcase-layout {
+  display: grid;
+  grid-template-columns: 1.08fr 1.12fr;
+  gap: 2.2rem;
+  align-items: center;
+  width: 100%;
+}
+
+/* Columna Izquierda: Identidad Cinética y Telemetría */
+.brand-left-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.telemetry-sys-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.32rem 0.85rem;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.32);
+  border-radius: 999px;
+  width: fit-content;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.15);
+}
+
+.sys-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mint, #34d399);
+  box-shadow: 0 0 10px var(--mint, #34d399);
+  animation: pulseDot 1.6s ease-in-out infinite;
+}
+
+.sys-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--mint, #34d399);
+}
+
+/* Título Cinético en Dos Niveles */
+.brand-kinetic-title-wrap {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.92;
+  cursor: pointer;
+  user-select: none;
+  margin: 0.2rem 0;
+  perspective: 1000px;
+}
+
+.brand-level {
+  display: flex;
+  font-family: var(--font-display, sans-serif);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.level-air {
+  font-size: clamp(3.2rem, 5.2vw, 4.6rem);
+  color: #ffffff;
+  text-shadow: 0 2px 24px rgba(255, 255, 255, 0.28);
+}
+
+.level-watch {
+  font-size: clamp(3.2rem, 5.2vw, 4.6rem);
+}
+
+/* Movimiento continuo tipo onda sinusoidal inspirado en corrientes de aire */
+.kinetic-letter {
+  display: inline-block;
+  will-change: transform;
+  animation: airWatchWave 3.4s ease-in-out infinite;
+  animation-delay: calc(var(--l-idx, 0) * 0.14s);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.25s ease;
+}
+
+@keyframes airWatchWave {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(-1.2deg);
+  }
+  50% {
+    transform: translateY(3px) rotate(0.6deg);
+  }
+  75% {
+    transform: translateY(-4px) rotate(1deg);
+  }
+}
+
+@keyframes brandGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-letter {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 35%, #06b6d4 70%, #22d3ee 100%);
+  background-size: 250% 250%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.38));
+  animation: airWatchWave 3.4s ease-in-out infinite, brandGradientShift 6s ease infinite;
+  animation-delay: calc(var(--l-idx, 0) * 0.14s), 0s;
+}
+
+/* Reacción interactiva al pasar el cursor */
+.brand-kinetic-title-wrap:hover .kinetic-letter {
+  animation-duration: 1.8s, 3s;
+}
+
+.kinetic-letter:hover {
+  transform: translateY(-14px) scale(1.18) !important;
+  color: #ffffff;
+  text-shadow: 0 0 25px rgba(34, 211, 238, 0.95), 0 0 14px rgba(16, 185, 129, 0.9);
+}
+
+.brand-tagline {
+  font-size: 1.02rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+  font-weight: 500;
+  max-width: 95%;
+}
+
+.brand-tech-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8rem;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.tech-spec-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tech-spec-item .bullet {
+  color: var(--cyan, #06b6d4);
+  font-size: 0.9rem;
+}
+
+.brand-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.spec-card {
+  background: rgba(10, 32, 44, 0.65);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  backdrop-filter: blur(8px);
+}
+
+.spec-kpi {
+  font-family: var(--font-mono, monospace);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.spec-label {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  line-height: 1.25;
+}
+
+/* Columna Derecha: Visor Técnico con Carrusel */
+.brand-right-col {
+  width: 100%;
+}
+
+.prototype-viewer-card {
+  background: rgba(10, 32, 44, 0.8);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 1.25rem;
+  padding: 0.95rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 30px rgba(6, 182, 212, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  position: relative;
+}
+
+.viewer-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.25rem;
+}
+
+.viewer-tag-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.viewer-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--turquoise, #22d3ee);
+  box-shadow: 0 0 10px var(--turquoise, #22d3ee);
+  animation: pulseDot 1.8s ease-in-out infinite;
+}
+
+.viewer-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--turquoise, #22d3ee);
+}
+
+.viewer-counter {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.18rem 0.55rem;
+  border-radius: 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Carrusel Viewport y Pista */
+.carousel-viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.9rem;
+  background: #02070c;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.media-container {
+  position: relative;
+  width: 100%;
+  height: 270px;
+  max-height: 38vh;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #040d14;
+}
+
+.carousel-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.media-overlay-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(4, 13, 20, 0.08) 0%, rgba(4, 13, 20, 0.65) 100%);
+  pointer-events: none;
+}
+
+.media-badge-pill {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.65rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(4, 13, 20, 0.85);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--mint, #34d399);
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+
+.media-badge-pill.cyan {
+  border-color: rgba(6, 182, 212, 0.45);
+  color: var(--turquoise, #22d3ee);
+}
+
+.media-badge-pill.emerald {
+  border-color: rgba(16, 185, 129, 0.45);
+  color: var(--mint, #34d399);
+}
+
+.media-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.carousel-caption {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  line-height: 1.35;
+  padding: 0 0.25rem;
+}
+
+.carousel-caption strong {
+  color: #ffffff;
+}
+
+/* Botones Discretos de Navegación del Carrusel ‹ › */
+.carousel-arrow {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(4, 13, 20, 0.78);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  color: #ffffff;
+  font-size: 1.45rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(6px);
+  z-index: 6;
+  padding: 0;
+  line-height: 1;
+}
+
+.carousel-arrow:hover {
+  background: rgba(16, 185, 129, 0.3);
+  border-color: var(--mint, #34d399);
+  color: var(--mint, #34d399);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+}
+
+.carousel-arrow.prev {
+  left: 0.65rem;
+}
+
+.carousel-arrow.next {
+  right: 0.65rem;
+}
+
+/* Puntos Indicadores Inferiores del Carrusel */
+.carousel-dots-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+}
+
+.c-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+}
+
+.c-dot:hover {
+  background: rgba(34, 211, 238, 0.55);
+  transform: scale(1.2);
+}
+
+.c-dot.active {
+  width: 26px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--emerald, #10b981), var(--turquoise, #22d3ee));
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
+}
+
+/* ==========================================================================
+   SLIDE 3: PLANTEAMIENTO DEL PROBLEMA & DATOS MATEMÁTICOS
    - Sin justify-content: space-between
    - Sin height: 100% que estire verticalmente
    - Grid 100% ancho con gap: 1rem y alineación compacta
@@ -3049,6 +3523,9 @@ html, body {
    ========================================================================== */
 @media (max-width: 1200px) {
   .hero-split-layout { grid-template-columns: 1.15fr 0.85fr; gap: 1rem; }
+  .brand-showcase-layout { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .level-air, .level-watch { font-size: 3.4rem; }
+  .media-container { height: 230px; }
   .video-wrapper { height: 175px; }
   .hero-title { font-size: 1.5rem; }
   .team-grid { grid-template-columns: repeat(3, 1fr); }
@@ -3058,6 +3535,9 @@ html, body {
 
 @media (max-width: 900px) {
   .hero-split-layout { grid-template-columns: 1fr; gap: 0.75rem; }
+  .brand-showcase-layout { grid-template-columns: 1fr; gap: 1rem; }
+  .level-air, .level-watch { font-size: 2.6rem; }
+  .media-container { height: 200px; }
   .video-wrapper { height: 160px; }
   .slide, .slide-section { padding: 0.75rem 1rem; }
   .problem-layout-grid { grid-template-columns: 1fr; }
