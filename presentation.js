@@ -13,11 +13,10 @@ const AIRWATCH_URL = "https://pag-integrador.pages.dev/";
 // Objeto de configuración y estado global
 const PresenterState = {
   currentSlideIndex: 0,
-  totalSlides: 10,
+  totalSlides: 11,
   isNotesOpen: false,
   isHelpOpen: false,
   isPlatformModalOpen: false,
-  isAppFlowModalOpen: false,
   
   // Temporizador de 12 minutos (720 segundos)
   timer: {
@@ -38,7 +37,7 @@ const PresenterState = {
   }
 };
 
-let webCarouselController = null;
+let appMobileCarouselController = null;
 
 // ============================================================================
 // INICIALIZACIÓN AL CARGAR EL DOM
@@ -53,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initQRCode();
   initConclusionImage();
   initPrototypeVideo();
-  webCarouselController = initWebShowcaseCarousel();
+  appMobileCarouselController = initAppMobileCarousel();
   updateSlideUI();
   console.log("⚡ Air Watch Telemetry Presentation Engine Inicializado.");
 });
@@ -169,7 +168,7 @@ function handleKeyNavigation(e) {
       closeAllModals();
       break;
 
-    // Teclas 1 a 9 para salto directo; 0 selecciona la diapositiva 10.
+    // Teclas 1 a 9 para salto directo; 0 selecciona la última diapositiva.
     case "1":
     case "2":
     case "3":
@@ -213,8 +212,8 @@ function goToSlide(targetIndex) {
   slides[targetIndex].classList.add("active");
   PresenterState.currentSlideIndex = targetIndex;
 
-  if (webCarouselController) {
-    webCarouselController.onSlideChange(targetIndex);
+  if (appMobileCarouselController) {
+    appMobileCarouselController.onSlideChange(targetIndex);
   }
   updateSlideUI();
   syncSpeakerNotes();
@@ -500,21 +499,6 @@ function initModals() {
     });
   }
 
-  const openAppFlowBtn = document.getElementById("openAppFlowModal");
-  const appFlowModal = document.getElementById("appFlowModal");
-  const closeAppFlowBtn = document.getElementById("closeAppFlowModal");
-
-  if (openAppFlowBtn) {
-    openAppFlowBtn.addEventListener("click", () => setAppFlowModalOpen(true));
-  }
-  if (closeAppFlowBtn) {
-    closeAppFlowBtn.addEventListener("click", () => setAppFlowModalOpen(false));
-  }
-  if (appFlowModal) {
-    appFlowModal.addEventListener("click", (e) => {
-      if (e.target === appFlowModal) setAppFlowModalOpen(false);
-    });
-  }
 }
 
 function toggleHelpModal() {
@@ -533,25 +517,9 @@ function setPlatformModalOpen(open) {
   if (modal) modal.classList.toggle("open", open);
 }
 
-function setAppFlowModalOpen(open) {
-  const wasOpen = PresenterState.isAppFlowModalOpen;
-  PresenterState.isAppFlowModalOpen = open;
-  const modal = document.getElementById("appFlowModal");
-  const openButton = document.getElementById("openAppFlowModal");
-  const closeButton = document.getElementById("closeAppFlowModal");
-
-  if (modal) {
-    modal.classList.toggle("open", open);
-    modal.setAttribute("aria-hidden", String(!open));
-  }
-  if (open && closeButton) closeButton.focus();
-  if (!open && wasOpen && openButton) openButton.focus();
-}
-
 function closeAllModals() {
   setHelpModalOpen(false);
   setPlatformModalOpen(false);
-  setAppFlowModalOpen(false);
   setSpeakerNotesOpen(false);
 }
 
@@ -600,17 +568,17 @@ function initSlideSpecificWidgets() {
   }
 }
 
-function initWebShowcaseCarousel() {
-  const carousel = document.getElementById("webDeliverableCarousel");
+function initAppMobileCarousel() {
+  const carousel = document.getElementById("appMobileCarousel");
   if (!carousel) return null;
 
-  const slides = Array.from(carousel.querySelectorAll(".web-carousel-slide"));
-  const dots = Array.from(carousel.querySelectorAll("[data-web-slide]"));
-  const previousButton = carousel.querySelector(".web-carousel-previous");
-  const nextButton = carousel.querySelector(".web-carousel-next");
+  const slides = Array.from(carousel.querySelectorAll(".app-mobile-slide"));
+  const dots = Array.from(carousel.querySelectorAll("[data-app-slide]"));
+  const previousButton = carousel.querySelector(".app-mobile-previous");
+  const nextButton = carousel.querySelector(".app-mobile-next");
   let currentIndex = 0;
   let intervalId = null;
-  let isInteracting = false;
+  let isPaused = false;
 
   function showSlide(index) {
     currentIndex = (index + slides.length) % slides.length;
@@ -630,28 +598,22 @@ function initWebShowcaseCarousel() {
     });
   }
 
-  function stop() {
+  function stopAutoAdvance() {
     if (intervalId !== null) {
       window.clearInterval(intervalId);
       intervalId = null;
     }
   }
 
-  function start() {
-    stop();
-    if (PresenterState.currentSlideIndex !== 6 || document.hidden || isInteracting) return;
-    intervalId = window.setInterval(() => showSlide(currentIndex + 1), 2000);
-  }
-
-  function setInteracting(value) {
-    isInteracting = value;
-    if (isInteracting) stop();
-    else start();
+  function startAutoAdvance() {
+    stopAutoAdvance();
+    if (PresenterState.currentSlideIndex !== 6 || document.hidden || isPaused) return;
+    intervalId = window.setInterval(() => showSlide(currentIndex + 1), 4500);
   }
 
   function manualNavigation(index) {
     showSlide(index);
-    start();
+    startAutoAdvance();
   }
 
   if (previousButton) {
@@ -662,35 +624,40 @@ function initWebShowcaseCarousel() {
   }
   dots.forEach((dot) => {
     dot.addEventListener("click", () => {
-      const targetIndex = Number.parseInt(dot.getAttribute("data-web-slide"), 10);
+      const targetIndex = Number.parseInt(dot.getAttribute("data-app-slide"), 10);
       if (Number.isInteger(targetIndex)) manualNavigation(targetIndex);
     });
   });
 
-  carousel.addEventListener("pointerdown", () => setInteracting(true));
-  document.addEventListener("pointerup", () => setInteracting(false));
-  document.addEventListener("pointercancel", () => setInteracting(false));
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stop();
-    else start();
+  carousel.addEventListener("pointerenter", () => {
+    isPaused = true;
+    stopAutoAdvance();
+  });
+  carousel.addEventListener("pointerleave", () => {
+    isPaused = false;
+    startAutoAdvance();
+  });
+  carousel.addEventListener("focusin", () => {
+    isPaused = true;
+    stopAutoAdvance();
+  });
+  carousel.addEventListener("focusout", (event) => {
+    if (!carousel.contains(event.relatedTarget)) {
+      isPaused = false;
+      startAutoAdvance();
+    }
   });
 
-  carousel.querySelectorAll("img[data-fallback]").forEach((image) => {
-    const showPlaceholder = () => {
-      image.style.display = "none";
-      const placeholder = image.parentElement.querySelector(".web-shot-placeholder");
-      if (placeholder) placeholder.hidden = false;
-    };
-    image.addEventListener("error", showPlaceholder);
-    if (image.complete && image.naturalWidth === 0) showPlaceholder();
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopAutoAdvance();
+    else startAutoAdvance();
   });
 
   showSlide(0);
   return {
     onSlideChange(index) {
-      if (index === 6) start();
-      else stop();
+      if (index === 6) startAutoAdvance();
+      else stopAutoAdvance();
     }
   };
 }
@@ -828,7 +795,7 @@ function animateNumber(element, start, end, duration) {
 }
 
 // ============================================================================
-// 7. CÓDIGO QR DINÁMICO & NÍTIDO (LÁMINA 10)
+// 7. CÓDIGO QR DINÁMICO & NÍTIDO (LÁMINA 11)
 // ============================================================================
 function initQRCode() {
   const qrContainer = document.getElementById("qrcodeCanvas");
@@ -870,7 +837,7 @@ function initQRCode() {
 }
 
 function initConclusionImage() {
-  const image = document.querySelector("#slide-9 .conclusion-visual img");
+  const image = document.querySelector("#slide-10 .conclusion-visual img");
   if (!image) return;
 
   const showPlaceholder = () => {

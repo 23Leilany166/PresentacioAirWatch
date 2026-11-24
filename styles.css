@@ -4611,126 +4611,126 @@ html, body {
 }
 
 /* Slide 9: concise e-commerce plans */
-#slide-8 .slide-inner {
+#slide-9 .slide-inner {
   max-width: 1440px;
   justify-content: center;
   gap: clamp(0.65rem, 1.4vh, 1rem);
 }
 
-#slide-8 .slide-header {
+#slide-9 .slide-header {
   margin-bottom: 0;
 }
 
-#slide-8 .slide-header .tag-row {
+#slide-9 .slide-header .tag-row {
   margin-bottom: 0.1rem;
 }
 
-#slide-8 .slide-header .tag-accent,
-#slide-8 .slide-header .tag-sub {
+#slide-9 .slide-header .tag-accent,
+#slide-9 .slide-header .tag-sub {
   font-size: 0.78rem;
 }
 
-#slide-8 .slide-heading {
+#slide-9 .slide-heading {
   margin-bottom: 0.1rem;
   font-size: clamp(2rem, 3.2vw, 2.7rem);
 }
 
-#slide-8 .slide-subheading {
+#slide-9 .slide-subheading {
   font-size: 1rem;
 }
 
-#slide-8 .pricing-grid {
+#slide-9 .pricing-grid {
   gap: clamp(0.8rem, 1.5vw, 1.25rem);
 }
 
-#slide-8 .pricing-card {
+#slide-9 .pricing-card {
   gap: 0.55rem;
   padding: clamp(1rem, 1.6vw, 1.4rem);
 }
 
-#slide-8 .pricing-header {
+#slide-9 .pricing-header {
   margin-bottom: 0;
 }
 
-#slide-8 .plan-type {
+#slide-9 .plan-type {
   font-size: 0.78rem;
 }
 
-#slide-8 .plan-name {
+#slide-9 .plan-name {
   margin: 0.2rem 0 0.4rem;
   font-size: clamp(1.3rem, 1.8vw, 1.6rem);
   line-height: 1.2;
 }
 
-#slide-8 .plan-price-row {
+#slide-9 .plan-price-row {
   gap: 0.25rem;
   margin-bottom: 0;
 }
 
-#slide-8 .currency {
+#slide-9 .currency {
   font-size: 1.35rem;
 }
 
-#slide-8 .price-val {
+#slide-9 .price-val {
   font-size: clamp(2.4rem, 3.2vw, 3rem);
 }
 
-#slide-8 .period {
+#slide-9 .period {
   font-size: 0.9rem;
 }
 
-#slide-8 .plan-features {
+#slide-9 .plan-features {
   flex: 1 1 auto;
   margin: 0.2rem 0 0;
 }
 
-#slide-8 .plan-checklist {
+#slide-9 .plan-checklist {
   gap: 0.6rem;
 }
 
-#slide-8 .plan-checklist li {
+#slide-9 .plan-checklist li {
   gap: 0.5rem;
   color: var(--text-primary);
   font-size: clamp(0.95rem, 1.15vw, 1.08rem);
   line-height: 1.35;
 }
 
-#slide-8 .plan-checklist li strong {
+#slide-9 .plan-checklist li strong {
   color: var(--text-primary);
 }
 
-#slide-8 .chk {
+#slide-9 .chk {
   flex: 0 0 auto;
   color: #587449;
   font-size: 1.1em;
 }
 
-#slide-8 .pricing-card.featured-pricing {
+#slide-9 .pricing-card.featured-pricing {
   border: 2px solid #587449;
   background: linear-gradient(150deg, #edf3e9, #ffffff 78%);
   box-shadow: 0 14px 36px -12px rgba(67, 91, 56, 0.28);
 }
 
-#slide-8 .featured-pricing .plan-name,
-#slide-8 .featured-pricing .currency,
-#slide-8 .featured-pricing .period,
-#slide-8 .featured-pricing .plan-checklist li,
-#slide-8 .featured-pricing .plan-checklist li strong,
-#slide-8 .featured-pricing .plan-type {
+#slide-9 .featured-pricing .plan-name,
+#slide-9 .featured-pricing .currency,
+#slide-9 .featured-pricing .period,
+#slide-9 .featured-pricing .plan-checklist li,
+#slide-9 .featured-pricing .plan-checklist li strong,
+#slide-9 .featured-pricing .plan-type {
   color: #263126;
 }
 
-#slide-8 .featured-pricing .text-cyan {
+#slide-9 .featured-pricing .text-cyan {
   color: #435b38 !important;
 }
 
-#slide-8 .popular-ribbon {
+#slide-9 .popular-ribbon {
   background: #587449;
   color: #ffffff;
   font-size: 0.72rem;
 }
 
-#slide-8 .pricing-web-cta {
+#slide-9 .pricing-web-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -4751,43 +4751,43 @@ html, body {
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-#slide-8 .pricing-web-cta:hover {
+#slide-9 .pricing-web-cta:hover {
   transform: translateY(-2px);
   background: #354a2d;
   box-shadow: 0 14px 28px -12px rgba(67, 91, 56, 0.7);
 }
 
-#slide-8 .pricing-web-cta:focus-visible {
+#slide-9 .pricing-web-cta:focus-visible {
   outline: 3px solid #8da77d;
   outline-offset: 3px;
 }
 
-#slide-8 .pricing-web-cta-icon {
+#slide-9 .pricing-web-cta-icon {
   font-size: 1.35em;
   line-height: 0.9;
 }
 
 @media (min-width: 901px) and (max-height: 600px) {
-  #slide-8 .slide-inner { gap: 0.45rem; }
-  #slide-8 .slide-heading { font-size: clamp(1.75rem, 2.7vw, 2.25rem); }
-  #slide-8 .slide-subheading { font-size: 0.85rem; }
-  #slide-8 .pricing-card { gap: 0.35rem; padding: 0.75rem 1rem; }
-  #slide-8 .plan-type { font-size: 0.68rem; }
-  #slide-8 .plan-name { margin: 0.1rem 0 0.25rem; font-size: 1.25rem; }
-  #slide-8 .price-val { font-size: 2.2rem; }
-  #slide-8 .currency { font-size: 1.1rem; }
-  #slide-8 .period { font-size: 0.75rem; }
-  #slide-8 .plan-checklist { gap: 0.35rem; }
-  #slide-8 .plan-checklist li { font-size: 0.88rem; line-height: 1.22; }
-  #slide-8 .pricing-web-cta { min-height: 2.7rem; padding: 0.5rem 1.2rem; font-size: 1rem; }
+  #slide-9 .slide-inner { gap: 0.45rem; }
+  #slide-9 .slide-heading { font-size: clamp(1.75rem, 2.7vw, 2.25rem); }
+  #slide-9 .slide-subheading { font-size: 0.85rem; }
+  #slide-9 .pricing-card { gap: 0.35rem; padding: 0.75rem 1rem; }
+  #slide-9 .plan-type { font-size: 0.68rem; }
+  #slide-9 .plan-name { margin: 0.1rem 0 0.25rem; font-size: 1.25rem; }
+  #slide-9 .price-val { font-size: 2.2rem; }
+  #slide-9 .currency { font-size: 1.1rem; }
+  #slide-9 .period { font-size: 0.75rem; }
+  #slide-9 .plan-checklist { gap: 0.35rem; }
+  #slide-9 .plan-checklist li { font-size: 0.88rem; line-height: 1.22; }
+  #slide-9 .pricing-web-cta { min-height: 2.7rem; padding: 0.5rem 1.2rem; font-size: 1rem; }
 }
 
 @media (max-width: 900px) {
-  #slide-8 .slide-inner { justify-content: flex-start; }
+  #slide-9 .slide-inner { justify-content: flex-start; }
 }
 
 @media (max-width: 600px) {
-  #slide-8 .pricing-web-cta { width: 100%; }
+  #slide-9 .pricing-web-cta { width: 100%; }
 }
 
 /* Slide 8: mobile app experience flow */
@@ -5022,45 +5022,45 @@ html, body {
 }
 
 /* Slide 10: concise closing message and clean, scannable QR */
-#slide-10 .closing-layout {
+#slide-11 .closing-layout {
   grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
   gap: clamp(1.25rem, 2.5vw, 2.4rem);
   align-items: center;
 }
 
-#slide-10 .impact-col {
+#slide-11 .impact-col {
   gap: clamp(0.4rem, 0.8vh, 0.6rem);
 }
 
-#slide-10 .closing-heading {
+#slide-11 .closing-heading {
   font-size: clamp(2.2rem, 3vw, 2.9rem);
   line-height: 1.12;
 }
 
-#slide-10 .closing-statement {
+#slide-11 .closing-statement {
   margin: 0;
   color: var(--text-secondary);
   font-size: clamp(1rem, 1.2vw, 1.16rem);
   line-height: 1.4;
 }
 
-#slide-10 .impact-pillars {
+#slide-11 .impact-pillars {
   gap: 0.4rem;
   margin: 0;
 }
 
-#slide-10 .pillar-card {
+#slide-11 .pillar-card {
   align-items: center;
   gap: 0.85rem;
   padding: 0.46rem 0.85rem;
 }
 
-#slide-10 .pillar-icon {
+#slide-11 .pillar-icon {
   width: 28px;
   height: 28px;
 }
 
-#slide-10 .pillar-info strong {
+#slide-11 .pillar-info strong {
   display: inline;
   margin: 0 0.15rem 0 0;
   color: var(--text-primary);
@@ -5068,73 +5068,73 @@ html, body {
   line-height: 1.25;
 }
 
-#slide-10 .pillar-info p {
+#slide-11 .pillar-info p {
   margin: 0;
   color: var(--text-secondary);
   font-size: clamp(0.96rem, 1.05vw, 1.02rem);
   line-height: 1.35;
 }
 
-#slide-10 .closing-thanks-card {
+#slide-11 .closing-thanks-card {
   padding: 0.6rem 0.9rem;
 }
 
-#slide-10 .thanks-title {
+#slide-11 .thanks-title {
   margin: 0 0 0.2rem;
   font-size: clamp(1.35rem, 1.65vw, 1.6rem);
 }
 
-#slide-10 .thanks-sub {
+#slide-11 .thanks-sub {
   margin: 0;
   font-size: clamp(0.98rem, 1.12vw, 1.08rem);
 }
 
-#slide-10 .qr-showcase-card {
+#slide-11 .qr-showcase-card {
   max-width: 420px;
   padding: clamp(1rem, 1.6vw, 1.4rem);
 }
 
-#slide-10 .qr-card-header {
+#slide-11 .qr-card-header {
   margin-bottom: 0.45rem;
 }
 
-#slide-10 .qr-render-frame {
+#slide-11 .qr-render-frame {
   margin-bottom: 0.75rem;
 }
 
-#slide-10 .qr-cta-heading {
+#slide-11 .qr-cta-heading {
   font-size: clamp(1.1rem, 1.3vw, 1.25rem);
 }
 
-#slide-10 .qr-cta-desc {
+#slide-11 .qr-cta-desc {
   margin-bottom: 0.45rem;
   font-size: clamp(0.9rem, 1vw, 1rem);
   line-height: 1.4;
 }
 
-#slide-10 .qr-footer-meta {
+#slide-11 .qr-footer-meta {
   padding-top: 0.3rem;
   font-size: 0.56rem;
 }
 
-#slide-10 .url-text {
+#slide-11 .url-text {
   min-width: 0;
   color: #435b38;
   font-size: clamp(0.76rem, 0.9vw, 0.88rem);
   text-decoration: none;
 }
 
-#slide-10 .url-text:hover {
+#slide-11 .url-text:hover {
   text-decoration: underline;
 }
 
-#slide-10 .url-text:focus-visible,
-#slide-10 .copy-url-btn:focus-visible {
+#slide-11 .url-text:focus-visible,
+#slide-11 .copy-url-btn:focus-visible {
   outline: 3px solid #8da77d;
   outline-offset: 3px;
 }
 
-#slide-10 .qr-code-box[role="status"] {
+#slide-11 .qr-code-box[role="status"] {
   padding: 0.5rem;
   color: #7d332e;
   font-size: 0.85rem;
@@ -5143,42 +5143,42 @@ html, body {
 }
 
 @media (min-width: 901px) and (max-height: 700px) {
-  #slide-10 .closing-heading {
+  #slide-11 .closing-heading {
     font-size: clamp(1.9rem, 2.6vw, 2.35rem);
   }
 
-  #slide-10 .closing-statement {
+  #slide-11 .closing-statement {
     font-size: 0.95rem;
   }
 
-  #slide-10 .pillar-card {
+  #slide-11 .pillar-card {
     padding: 0.45rem 0.75rem;
   }
 
-  #slide-10 .pillar-info strong {
+  #slide-11 .pillar-info strong {
     font-size: 1rem;
   }
 
-  #slide-10 .pillar-info p {
+  #slide-11 .pillar-info p {
     font-size: 0.9rem;
   }
 }
 
 /* Slide 9: project conclusion */
-#slide-9 .conclusion-slide {
+#slide-10 .conclusion-slide {
   width: min(100%, 1280px);
   max-width: 1280px;
   justify-content: center;
 }
 
-#slide-9 .conclusion-layout {
+#slide-10 .conclusion-layout {
   display: grid;
   align-items: center;
   justify-content: center;
   width: 100%;
 }
 
-#slide-9 .conclusion-card {
+#slide-10 .conclusion-card {
   display: flex;
   flex-direction: column;
   gap: clamp(1.25rem, 2.5vh, 2rem);
@@ -5192,7 +5192,7 @@ html, body {
   box-shadow: 0 24px 60px -34px rgba(31, 41, 33, 0.34);
 }
 
-#slide-9 .conclusion-copy {
+#slide-10 .conclusion-copy {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -5201,7 +5201,7 @@ html, body {
   min-width: 0;
 }
 
-#slide-9 .conclusion-heading {
+#slide-10 .conclusion-heading {
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -5213,14 +5213,14 @@ html, body {
   line-height: 1.05;
 }
 
-#slide-9 .conclusion-heading svg {
+#slide-10 .conclusion-heading svg {
   flex: 0 0 auto;
   width: 1em;
   height: 1em;
   color: #587449;
 }
 
-#slide-9 .conclusion-lead {
+#slide-10 .conclusion-lead {
   margin: 0;
   padding: clamp(1rem, 2vw, 1.5rem);
   border-left: 4px solid #587449;
@@ -5232,18 +5232,18 @@ html, body {
   line-height: 1.55;
 }
 
-#slide-9 .conclusion-lead strong {
+#slide-10 .conclusion-lead strong {
   color: #435b38;
   font-weight: 800;
 }
 
-#slide-9 .conclusion-pillars {
+#slide-10 .conclusion-pillars {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(0.6rem, 1.2vw, 1rem);
 }
 
-#slide-9 .conclusion-pillar {
+#slide-10 .conclusion-pillar {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5260,7 +5260,7 @@ html, body {
   text-align: left;
 }
 
-#slide-9 .conclusion-pillar svg {
+#slide-10 .conclusion-pillar svg {
   flex: 0 0 auto;
   width: 1.35rem;
   height: 1.35rem;
@@ -5268,26 +5268,26 @@ html, body {
 }
 
 @media (max-width: 900px) {
-  #slide-9 .conclusion-card {
+  #slide-10 .conclusion-card {
     gap: 1.1rem;
   }
 
-  #slide-9 .conclusion-pillars {
+  #slide-10 .conclusion-pillars {
     grid-template-columns: 1fr;
   }
 }
 
 @media (min-width: 901px) and (max-height: 700px) {
-  #slide-9 .conclusion-card {
+  #slide-10 .conclusion-card {
     gap: 1rem;
     padding: 1.25rem 1.75rem;
   }
 
-  #slide-9 .conclusion-heading {
+  #slide-10 .conclusion-heading {
     font-size: clamp(1.8rem, 2.8vw, 2.5rem);
   }
 
-  #slide-9 .conclusion-lead {
+  #slide-10 .conclusion-lead {
     font-size: clamp(1.05rem, 1.4vw, 1.3rem);
     line-height: 1.45;
   }
@@ -5476,5 +5476,407 @@ html, body {
       "badge"
       "title"
       "body";
+  }
+}
+
+/* Slide 7: executive app overview and smartphone carousel */
+#slide-7 .mobile-experience-slide {
+  width: min(100%, 1380px);
+  max-width: 1380px;
+  justify-content: center;
+  padding-top: clamp(0.7rem, 2vh, 1.5rem);
+  padding-bottom: clamp(0.7rem, 2vh, 1.5rem);
+}
+
+#slide-7 .mobile-experience-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 3rem);
+  width: 100%;
+}
+
+#slide-7 .mobile-experience-copy {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.7rem, 1.4vh, 1rem);
+  min-width: 0;
+}
+
+#slide-7 .mobile-experience-copy .slide-header {
+  margin-bottom: 0;
+}
+
+#slide-7 .mobile-experience-copy .slide-heading {
+  max-width: none;
+  font-size: clamp(1.9rem, 3vw, 2.7rem);
+  line-height: 1.1;
+}
+
+#slide-7 .mobile-experience-lead {
+  max-width: 58ch;
+  color: var(--text-secondary);
+  font-size: clamp(0.98rem, 1.15vw, 1.1rem);
+  line-height: 1.45;
+}
+
+#slide-7 .mobile-feature-list {
+  display: grid;
+  gap: clamp(0.55rem, 1vh, 0.8rem);
+  margin-top: 0.2rem;
+}
+
+#slide-7 .mobile-feature-card {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.8rem;
+  padding: clamp(0.65rem, 1vw, 0.9rem);
+  border: 1px solid rgba(88, 116, 73, 0.2);
+  border-left: 4px solid #78916c;
+  border-radius: var(--radius-md);
+  background: linear-gradient(120deg, #f1f5ee, #ffffff 78%);
+  box-shadow: 0 8px 22px -18px rgba(31, 41, 33, 0.26);
+}
+
+#slide-7 .mobile-feature-icon {
+  display: grid;
+  place-items: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  background: rgba(167, 185, 154, 0.22);
+  color: #587449;
+}
+
+#slide-7 .mobile-feature-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+#slide-7 .mobile-feature-card h3 {
+  margin: 0 0 0.15rem;
+  color: var(--text-primary);
+  font-size: clamp(0.98rem, 1.15vw, 1.08rem);
+  line-height: 1.25;
+}
+
+#slide-7 .mobile-feature-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: clamp(0.82rem, 0.95vw, 0.92rem);
+  line-height: 1.35;
+}
+
+#slide-7 .app-phone-shell {
+  justify-self: center;
+  width: auto;
+  height: min(68vh, 570px);
+  min-height: 390px;
+  aspect-ratio: 0.51;
+  padding: 8px;
+  border: 2px solid #29312d;
+  border-radius: 2.7rem;
+  background: linear-gradient(145deg, #37413b, #151c18 65%);
+  box-shadow: 0 28px 60px -26px rgba(17, 26, 20, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+#slide-7 .app-phone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2.1rem;
+  background: #f7f9f6;
+  box-shadow: inset 0 0 0 1px rgba(25, 37, 29, 0.12);
+}
+
+#slide-7 .app-phone-island {
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 31%;
+  height: 1.05rem;
+  padding: 0 0.4rem;
+  transform: translateX(-50%);
+  border-radius: var(--radius-full);
+  background: #111713;
+}
+
+#slide-7 .app-phone-island span {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: #31453a;
+  box-shadow: inset 0 0 0 1px rgba(143, 180, 155, 0.25);
+}
+
+#slide-7 .app-mobile-carousel {
+  position: absolute;
+  inset: 0;
+  padding: 2rem 0.65rem 1.7rem;
+}
+
+#slide-7 .app-mobile-slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#slide-7 .app-mobile-slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.35rem;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+#slide-7 .app-mobile-slide.is-current {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+}
+
+#slide-7 .app-mobile-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border-radius: 0.8rem;
+  background: #ffffff;
+  object-fit: contain;
+}
+
+#slide-7 .app-mobile-slide figcaption {
+  min-height: 2.2rem;
+  padding: 0.35rem 0.25rem;
+  color: #354a2d;
+  font-size: clamp(0.68rem, 0.8vw, 0.78rem);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+}
+
+#slide-7 .app-mobile-control {
+  position: absolute;
+  top: 43%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0 0 0.15rem;
+  border: 1px solid rgba(88, 116, 73, 0.28);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #354a2d;
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(31, 41, 33, 0.16);
+}
+
+#slide-7 .app-mobile-control:focus-visible,
+#slide-7 .app-mobile-dots button:focus-visible {
+  outline: 2px solid #587449;
+  outline-offset: 2px;
+}
+
+#slide-7 .app-mobile-previous {
+  left: 0.45rem;
+}
+
+#slide-7 .app-mobile-next {
+  right: 0.45rem;
+}
+
+#slide-7 .app-mobile-dots {
+  position: absolute;
+  right: 0;
+  bottom: 0.38rem;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 0.42rem;
+}
+
+#slide-7 .app-mobile-dots button {
+  width: 0.48rem;
+  height: 0.48rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #bdc9b8;
+  cursor: pointer;
+}
+
+#slide-7 .app-mobile-dots button.is-current {
+  width: 1.15rem;
+  border-radius: var(--radius-full);
+  background: #587449;
+}
+
+#slide-7 .app-phone-home {
+  position: absolute;
+  bottom: 0.38rem;
+  left: 50%;
+  z-index: 2;
+  width: 4.5rem;
+  height: 0.2rem;
+  transform: translateX(-50%);
+  border-radius: var(--radius-full);
+  background: rgba(28, 38, 31, 0.5);
+}
+
+/* Slide 8: complete mobile user flow */
+#slide-8 .app-flow-architecture-slide {
+  width: min(100%, 1380px);
+  max-width: 1380px;
+  justify-content: center;
+  gap: clamp(0.55rem, 1.1vh, 0.9rem);
+  padding-top: clamp(0.6rem, 1.5vh, 1.1rem);
+  padding-bottom: clamp(0.6rem, 1.5vh, 1.1rem);
+}
+
+#slide-8 .app-flow-architecture-slide .slide-header {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+#slide-8 .app-flow-architecture-slide .tag-row {
+  justify-content: center;
+}
+
+#slide-8 .app-flow-architecture-slide .slide-heading {
+  font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+}
+
+#slide-8 .app-flow-image-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 1240px);
+  height: min(52vh, 520px);
+  min-height: 0;
+  margin: 0 auto;
+  padding: clamp(0.4rem, 1vw, 0.75rem);
+  overflow: hidden;
+  border: 1px solid rgba(88, 116, 73, 0.28);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 20px 46px -30px rgba(31, 41, 33, 0.34);
+}
+
+#slide-8 .app-flow-image-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#slide-8 .app-flow-phase-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(0.4rem, 1vw, 0.85rem);
+  width: min(100%, 1240px);
+  margin: 0 auto;
+}
+
+#slide-8 .app-flow-phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid rgba(88, 116, 73, 0.22);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  color: #354a2d;
+  text-align: center;
+}
+
+#slide-8 .app-flow-phase strong {
+  font-size: clamp(0.82rem, 1.05vw, 0.98rem);
+  line-height: 1.25;
+}
+
+#slide-8 .app-flow-phase span {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+#slide-8 .app-flow-phase-arrow {
+  color: #587449;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  #slide-7 .mobile-experience-slide,
+  #slide-8 .app-flow-architecture-slide {
+    justify-content: flex-start;
+  }
+
+  #slide-7 .mobile-experience-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  #slide-7 .mobile-experience-copy .slide-heading {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+  }
+
+  #slide-7 .app-phone-shell {
+    height: min(52vh, 430px);
+    min-height: 330px;
+  }
+
+  #slide-8 .app-flow-image-card {
+    height: min(46vh, 440px);
+  }
+
+  #slide-8 .app-flow-phase-bar {
+    grid-template-columns: 1fr;
+  }
+
+  #slide-8 .app-flow-phase-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 600px) {
+  #slide-7 .mobile-feature-card {
+    padding: 0.55rem 0.65rem;
+  }
+
+  #slide-7 .app-phone-shell {
+    height: min(48vh, 390px);
+    min-height: 300px;
+  }
+
+  #slide-8 .app-flow-architecture-slide .slide-heading {
+    font-size: clamp(1.55rem, 6vw, 2rem);
+  }
+}
+
+@media (min-width: 901px) and (max-height: 700px) {
+  #slide-7 .app-phone-shell {
+    height: min(60vh, 460px);
+    min-height: 360px;
+  }
+
+  #slide-8 .app-flow-image-card {
+    height: min(44vh, 380px);
   }
 }
