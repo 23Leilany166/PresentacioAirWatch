@@ -17,6 +17,7 @@ const PresenterState = {
   isNotesOpen: false,
   isHelpOpen: false,
   isPlatformModalOpen: false,
+  isAppFlowModalOpen: false,
   
   // Temporizador de 12 minutos (720 segundos)
   timer: {
@@ -268,7 +269,7 @@ function updateSlideUI() {
 }
 
 function initPrototypeVideo() {
-  const video = document.querySelector("#slide-5 .prototype-video-player");
+  const video = document.querySelector("#slide-4 .prototype-video-player");
   const fallback = document.getElementById("prototypeVideoFallback");
   if (!video || !fallback) return;
 
@@ -498,6 +499,22 @@ function initModals() {
       if (e.target === platformModal) setPlatformModalOpen(false);
     });
   }
+
+  const openAppFlowBtn = document.getElementById("openAppFlowModal");
+  const appFlowModal = document.getElementById("appFlowModal");
+  const closeAppFlowBtn = document.getElementById("closeAppFlowModal");
+
+  if (openAppFlowBtn) {
+    openAppFlowBtn.addEventListener("click", () => setAppFlowModalOpen(true));
+  }
+  if (closeAppFlowBtn) {
+    closeAppFlowBtn.addEventListener("click", () => setAppFlowModalOpen(false));
+  }
+  if (appFlowModal) {
+    appFlowModal.addEventListener("click", (e) => {
+      if (e.target === appFlowModal) setAppFlowModalOpen(false);
+    });
+  }
 }
 
 function toggleHelpModal() {
@@ -516,9 +533,25 @@ function setPlatformModalOpen(open) {
   if (modal) modal.classList.toggle("open", open);
 }
 
+function setAppFlowModalOpen(open) {
+  const wasOpen = PresenterState.isAppFlowModalOpen;
+  PresenterState.isAppFlowModalOpen = open;
+  const modal = document.getElementById("appFlowModal");
+  const openButton = document.getElementById("openAppFlowModal");
+  const closeButton = document.getElementById("closeAppFlowModal");
+
+  if (modal) {
+    modal.classList.toggle("open", open);
+    modal.setAttribute("aria-hidden", String(!open));
+  }
+  if (open && closeButton) closeButton.focus();
+  if (!open && wasOpen && openButton) openButton.focus();
+}
+
 function closeAllModals() {
   setHelpModalOpen(false);
   setPlatformModalOpen(false);
+  setAppFlowModalOpen(false);
   setSpeakerNotesOpen(false);
 }
 
@@ -606,7 +639,7 @@ function initWebShowcaseCarousel() {
 
   function start() {
     stop();
-    if (PresenterState.currentSlideIndex !== 7 || document.hidden || isInteracting) return;
+    if (PresenterState.currentSlideIndex !== 6 || document.hidden || isInteracting) return;
     intervalId = window.setInterval(() => showSlide(currentIndex + 1), 2000);
   }
 
@@ -656,7 +689,7 @@ function initWebShowcaseCarousel() {
   showSlide(0);
   return {
     onSlideChange(index) {
-      if (index === 7) start();
+      if (index === 6) start();
       else stop();
     }
   };
@@ -837,7 +870,7 @@ function initQRCode() {
 }
 
 function initConclusionImage() {
-  const image = document.querySelector("#slide-10 .conclusion-visual img");
+  const image = document.querySelector("#slide-9 .conclusion-visual img");
   if (!image) return;
 
   const showPlaceholder = () => {
